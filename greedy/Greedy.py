@@ -37,8 +37,23 @@ def multi_or_plus(input):
 
     print(result)
 
+# Q5. 모험가 길드
+def guild(N, input):
+    members = list(map(int, input.split(' ')))
+    members.sort(reverse=False)
+    result = 0
+
+    for m in members:
+        if members.count(m) >= m:
+            result += 1
+            del members[0: m]
+
+    print(result)
+
+
 if __name__ == '__main__':
     change(1260)
     until_one(17, 4)
     multi_or_plus("2231")
+    guild(5, '1 2 2 2 3')
 

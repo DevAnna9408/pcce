@@ -45,6 +45,7 @@ if __name__ == '__main__':
 - 이 알고리즘의 시간 복잡도는 금액과는 무관하고, 동전의 총 종류에만 영향을 받기 때문이다.
 
 > Q3
+
 ![greedy3.png](greedy3.png)
 ![greedy4.png](greedy4.png)
 ```python
@@ -61,7 +62,7 @@ def until_one(N, K):
 
     print(result)
 
-# 책에서 푼 방법
+# 이코테의 풀이
 def ecote_until_ond(n, k):
     count = 0 # 시행횟수는 최초 0
     while True: # 반복문을 시행
@@ -85,6 +86,7 @@ def ecote_until_ond(n, k):
 - 이코테에서 푼 방법은 random access는 불가능하고 O(n)만큼 반복하는게 아닌 데이터가 증가 할 때마다 단계가 늘어나므로 O(logN)의 시간 복잡도를 가진다.
 
 > Q4
+
 ![greedy5.png](greedy5.png)
 ![greedy6.png](greedy6.png)
 
@@ -106,3 +108,73 @@ def multi_or_plus(input):
 - 반복하는 횟수만큼 이므로 O(N)의 시간복잡도를 가진다.
 
 > Q5
+
+![greedy7.png](greedy7.png)
+![greedy8.png](greedy8.png)
+![greedy9.png](greedy9.png)
+
+```python
+# 내가 푼 풀이
+def guild(N, input): # 입력값을 두 개를 받지만, 사실 N은 불필요 하다.
+    members = list(map(int, input.split(' '))) 
+    members.sort(reverse=False) # 공포도 목록을 작은 순서대로 정렬 후
+    result = 0
+
+    for m in members: # 공포도를 돌면서
+        if members.count(m) >= m: # 해당 공포도의 값 이상 인 사람들의 수를 세어서
+            result += 1 # 해당 멤버가 포함되면 그룹을 한 개 결성하고
+            del members[0: m] # 그룹을 결성 한 멤버를 삭제하면 된다.
+
+    print(result)
+
+# 이코테의 풀이
+
+n = int(input())
+data = list(map(int, input().split()))
+data.sort()
+
+result = 0 # 총 그룹의 수
+count = 0 # 현재 그룹에 포함된 모험가의 수
+
+for i in data: # 공포도를 낮은 것 부터 하나씩 확인하며
+    count += 1 # 현재 그룹에 해당하는 모험가를 포함시킨다.
+    if count >= i: # 현재 그룹에 포함된 모험가의 수가 현재의 공포도 이상이라면, 그룹 결성
+        result += 1 # 총 그룹의 수 증가시키기
+        count = 0 #현재 그룹에 포함 된 모험가의 수 초기화
+
+print(result)
+```
+
+> 시간 복잡도
+- 입력받은 공포도 배열에서 한 번 반복 이후 줄어드는 배열 크기만큼 반복 횟수가 줄어들기 때문에 O(logN) 만큼의 시간 복잡도를 가진다.
+
+> 그리디 템플릿
+- 그리디 알고리즘은 매 번 가장 효과적인 방법을 찾아 구현하는 방식을 채택하므로, 템플릿을 정의 할 수 없다.
+- 따라서 이코테의 강의 문제에서 사용 된 일부 기법과 특정 상황에서 사용하면 좋은 아이디어를 소개한다.
+
+> input의 범위와 값이 확실 할 때는 배열로 정의해서 사용한다.
+- 거스름 돈 문제의 경우 동전의 목록이 항상 고정되어 사용되므로, 미리 정의 해 놓고 사용한다.
+```python
+money_group = [500, 100, 50, 10]
+```
+
+> 몫과 나머지를 이용한 연산에서 바로 나누어 떨어지는 값을 찾을 때는 나머지에 몫을 곱한다.
+- 1이 될 때 까지 문제의 경우 단번에 나누어 떨어지는 값을 찾아야 하므로, 몫에 대상값을 곱하면 바로 나누어 떨어지는 수를 찾을 수 있다.
+```python
+target = (대상 값 // 나눌 값) * 나눌 값 # 몫은 한 번 이상 나눈 수이므로, 나눌 값을 곱하면 target은 항상 한 번에 나누어 떨어지는 값이 된다.
+```
+
+> 배열을 순회 할 때 한 번 사용되고 이후에 사용되지 않는다면, 소거하는 편이 빠르다
+- 모험가 길드 문제에서 한 번 그룹으로 지정 된 사람들과 나머지 사람들은 더 이상 필요하지 않으므로, 배열에서 제거하면 훨씬 빨리 배열을 순회할 수 있다.
+```python
+members = [1, 2, 2, 2, 3]
+result = 0
+for m in members:
+        if members.count(m) >= m:
+            result += 1
+            del members[0: m] # 더 이상 필요없는 요소를 상황에 맞게 삭제
+```
+
+
+
+
