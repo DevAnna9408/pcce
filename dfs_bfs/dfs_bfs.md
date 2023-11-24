@@ -98,7 +98,7 @@ def ice_cream():
 
     def dfs(x, y): # 깊이 우선 탐색
         
-        # 만약 범위를 벗어나면 False로 dfs 종료
+        # 만약 범위를 벗어나면 False로 dfs_bfs 종료
         if x < 0 or x == n or y < 0 or y == m:
             return False
 
@@ -112,7 +112,7 @@ def ice_cream():
             # 이동하면서 모두 막힘없이 0인 경우에만 True를 return == 모두 0으로 연결 되어 있음
             return True
 
-        # 두 경우 중 어느 경우에도 해당 하지 않는 경우 dfs 종료
+        # 두 경우 중 어느 경우에도 해당 하지 않는 경우 dfs_bfs 종료
         return False
 
     # N x M 행렬을 돌면서
